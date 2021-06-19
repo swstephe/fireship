@@ -1,20 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react'
+import NavBar from './components/NavBar'
+import Main from './components/Main'
+import CatsIcon from "./icons/CatsIcon"
+import AliensIcon from "./icons/AliensIcon"
+import SpaceIcon from "./icons/SpaceIcon"
+import ShuttleIcon from "./icons/ShuttleIcon"
+
+const themeMap = {
+  dark: "light",
+  light: "solar",
+  solar: "dark"
+}
+
+const navbarItems = [
+  [<CatsIcon/>, "Cats"],
+  [<AliensIcon/>, "Aliens"],
+  [<SpaceIcon/>, "Space"],
+  [<ShuttleIcon/>, "Shuttle"]
+]
 
 function App() {
+  const currentTheme = localStorage.getItem('theme') || 'dark';
+  const [theme, setTheme] = useState(currentTheme);
+  document.body.className = theme;
+
+  function switchTheme(e) {
+    const next = themeMap[theme]
+    setTheme(next);
+    localStorage.setItem('theme', next);
+    e.preventDefault()
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo"/>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a href="https://reactjs.org" target="_blank" rel="noopener noreferrer" className="App-link">
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <NavBar navbarItems={navbarItems} switchTheme={switchTheme}/>
+      <Main />
+    </>
+  )
 }
 
 export default App;
