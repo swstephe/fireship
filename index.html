@@ -2,9 +2,29 @@
 <html lang="en">
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script defer src="theme.js"></script>
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap" />
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script>
+    const themeMap = {
+      dark: "light",
+      light: "solar",
+      solar: "dark"
+    };
+
+    function initTheme() {
+      const current = localStorage.getItem('theme') || 'dark'
+      document.body.classList.add(current)
+      return current
+    }
+
+    function nextTheme(theme) {
+      const next = themeMap[theme]
+      document.body.classList.replace(theme, next)
+      localStorage.setItem('theme', next)
+      return next
+    }
+  </script>
 </head>
 <body>
 <nav class="navbar">
@@ -149,8 +169,8 @@
         <span class="link-text">Shuttle</span>
       </a>
     </li>
-    <li class="nav-item" id="themeButton">
-      <a href="#" class="nav-link">
+    <li class="nav-item" id="themeButton" x-init="theme = initTheme()">
+      <a href="#" class="nav-link" x-on:click.prevent="theme = nextTheme(theme)">
         <svg
             class="theme-icon"
             id="lightIcon"
@@ -161,7 +181,6 @@
             role="img"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 512 512"
-            class="svg-inline--fa fa-moon-stars fa-w-16 fa-7x"
         >
           <g class="fa-group">
             <path
@@ -186,7 +205,6 @@
             role="img"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 512 512"
-            class="svg-inline--fa fa-sun fa-w-16 fa-7x"
         >
           <g class="fa-group">
             <path
@@ -211,7 +229,6 @@
             role="img"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 576 512"
-            class="svg-inline--fa fa-sunglasses fa-w-18 fa-7x"
         >
           <g class="fa-group">
             <path
