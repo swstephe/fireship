@@ -1,0 +1,9 @@
+{
+  "env": {
+    "tests": {
+      "presets": [
+        ["preact-cli/babel", {"modules":  "commonsjs"}]
+      ]
+    }
+  }
+}
